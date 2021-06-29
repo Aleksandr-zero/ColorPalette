@@ -2,14 +2,14 @@ import TemplateSlider from "./template.js";
 import ColorHandlers from "../colorPalette/handlersColor.js";
 
 
-export default class Slider extends HTMLElement {
+export default class ColorSlider extends HTMLElement {
     /*
 	Ползнок для выборки цвета, прозрачности и т.д.
     */
 
     static get returnDEFAULT_VALUE() { return 0; }
     static get returnDEFAULT_COLOR() {
-    	const rgb = ColorHandlers.HSVtoRGB(Slider.returnDEFAULT_VALUE, 1, 1);
+    	const rgb = ColorHandlers.HSVtoRGB(ColorSlider.returnDEFAULT_VALUE, 1, 1);
     	const hex = ColorHandlers.rgbToHex(rgb.r, rgb.g, rgb.b);
     	return hex;
     }
@@ -40,7 +40,7 @@ export default class Slider extends HTMLElement {
 
 	connectedCallback() {
 		if ( !this.value ) {
-			this.value = Slider.returnDEFAULT_VALUE;
+			this.value = ColorSlider.returnDEFAULT_VALUE;
 		} else if ( this.value ) {
 			let position = Math.round(this.slider.clientWidth / 100 * this.value);
 			this.thumb.style.transform = `translate3d(${position}px, 0, 0)`;
@@ -49,7 +49,7 @@ export default class Slider extends HTMLElement {
 		};
 
 		if ( !this.backgroundcolor && this.value !== 0 ) {
-			this.backgroundcolor = Slider.returnDEFAULT_COLOR;
+			this.backgroundcolor = ColorSlider.returnDEFAULT_COLOR;
 		};
 	}
 
@@ -71,14 +71,7 @@ export default class Slider extends HTMLElement {
 
 
 	setColor() {
-		const splitValue = this.value.split(".");
-		let newValue;
-
-		if ( splitValue.length > 1 ) {
-			newValue = `0.${splitValue[0]}${splitValue[1]}`;
-		} else if ( splitValue.length = 1 ) {
-			newValue = `0.${splitValue[0]}`;
-		};
+		const newValue = this.value / 100;
 
 		const rgb = ColorHandlers.HSVtoRGB(newValue, 1, 1);
 		const hex = ColorHandlers.rgbToHex(rgb.r, rgb.g, rgb.b);
@@ -107,4 +100,9 @@ export default class Slider extends HTMLElement {
 		document.removeEventListener("mousemove", this._swipeActionThumbSlider);
 		document.removeEventListener("mouseup", this._swipeEndThumbSlider);
 	}
+};
+
+
+if ( !customElements.get("color-slider") ) {
+	customElements.define("color-slider", ColorSlider);
 };

@@ -1,5 +1,4 @@
 import TemplateColoPalette from "./template.js";
-import ColorHandlers from "./handlersColor.js";
 import Handlers from './handlers.js';
 
 
@@ -35,4 +34,9 @@ export default class ColorPalette extends HTMLElement {
 	connectedCallback() {
 
 	}
+};
+
+
+if ( !customElements.get("color-palette") ) {
+	customElements.define("color-palette", ColorPalette);
 };

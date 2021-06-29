@@ -1,4 +1,4 @@
-import Slider from '../slider/slider.js';
+import ColorSlider from '../slider/slider.js';
 import ColorPicker from '../colorPicker/colorPicker.js';
 
 
@@ -23,13 +23,15 @@ export default {
 
 	renderHTML() {
 		return `
-			<div id="color-palette">
-				<color-picker
-					backgroundcolor="#ff0000">
-				></color-picker>
-				<div class="back-sliders">
-					<color-slider id="slider-color" value="50"></color-slider>
-					<color-slider id="slider-transparency" value="0"></color-slider>
+			<div id="color-palette-wrapper">
+				<div class="container">
+					<color-picker
+						backgroundcolor="#ff0000"
+					></color-picker>
+					<div class="back-sliders">
+						<color-slider id="slider-color" value="50"></color-slider>
+						<color-slider id="slider-transparency" value="0"></color-slider>
+					</div>
 				</div>
 			</div>
 		`
@@ -38,9 +40,8 @@ export default {
 	renderCSS() {
 		return `
 			<style>
-				#color-palette {
+				#color-palette-wrapper {
 					width: 100%;
-					height: 100%;
 				}
 
 				#slider-color, #slider-transparency {

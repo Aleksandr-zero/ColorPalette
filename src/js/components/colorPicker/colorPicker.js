@@ -55,3 +55,8 @@ export default class ColorPicker extends HTMLElement {
 
 	}
 };
+
+
+if ( !customElements.get("color-picker") ) {
+	customElements.define("color-picker", ColorPicker);
+};
