@@ -1,23 +1,38 @@
 import TemplateColoPalette from "./template.js";
 import ColorHandlers from "./handlersColor.js";
+import Handlers from './handlers.js';
 
 
 export default class ColorPalette extends HTMLElement {
     /*
-
+	Цветовая палитра.
     */
 
 	constructor() {
 		super();
 
-		this.shadow = this.attachShadow({ mode: "open" });
+		this.attachShadow({ mode: "open" });
+		this.shadowRoot.innerHTML = TemplateColoPalette.render();
+
+		this.dom = TemplateColoPalette.mapDOM(this.shadowRoot);
+
+		const observer = new MutationObserver((e) => { this.onMutationChange(e) });
+		observer.observe(this.shadowRoot, { attributes: true, subtree: true })
+	}
+
+	onMutationChange(records) {
+		records.forEach((record) => {
+			this.data = Handlers.update({
+				model: this.data,
+				dom: this.dom,
+				component: this,
+				element: record.target,
+				attribute: record.attributeName
+			});
+		});
 	}
 
 	connectedCallback() {
-		this.shadow.innerHTML = TemplateColoPalette.render();
-		console.log(ColorHandlers.rgbToHex(252, 211, 25));
-		console.log(ColorHandlers.hexToRgb("#0033ff"));
-		const aaa = ColorHandlers.HSVtoRGB(14.3253455, 1, 1);
-		console.log(ColorHandlers.rgbToHex(aaa.r, aaa.g, aaa.b));
+
 	}
 };

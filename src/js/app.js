@@ -1,5 +1,5 @@
-import ColorPalette from "./components/ColorPalette/ColorPalette.js";
-import ColorPicker from "./components/ColorPicker/ColorPicker.js";
+import ColorPalette from "./components/colorPalette/colorPalette.js";
+import ColorPicker from "./components/colorPicker/colorPicker.js";
 import Slider from "./components/slider/slider.js";
 
 

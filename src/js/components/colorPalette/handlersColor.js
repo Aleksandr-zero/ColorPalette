@@ -1,40 +1,41 @@
 export default {
 	/**
+	* @from https://stackoverflow.com/questions/17242144/javascript-convert-hsb-hsv-color-to-rgb-accurately
 	* @from https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
 	* @from http://www.easyrgb.com/en/math.php#text1
 	*/
 
 	HSVtoRGB(H, S, V) {
 		/** accepts parameters
-		 * @param h Object = {h:x, s:y, v:z}
+		 * @param h Object = { h:x, s:y, v:z }
 		 * OR
 		 * @param h, s, v
 		*/
 
 		let R, G, B, i, f, p, q, t;
 
-		if (arguments.length === 1) S = H.S, V = H.V, H = H.H;
+        if (arguments.length === 1) S = H.S, V = H.V, H = H.H;
 
-		i = Math.floor(H * 6);
-		f = H * 6 - i;
-		p = V * (1 - S);
-		q = V * (1 - f * S);
-		t = V * (1 - (1 - f) * S);
+        i = Math.floor(H * 6);
+        f = H * 6 - i;
+        p = V * (1 - S);
+        q = V * (1 - f * S);
+        t = V * (1 - (1 - f) * S);
 
-		switch (i % 6) {
-			case 0: R = V, G = t, B = p; break;
-			case 1: R = q, G = V, B = p; break;
-			case 2: R = p, G = V, B = t; break;
-			case 3: R = p, G = q, B = V; break;
-			case 4: R = t, G = p, B = V; break;
-			case 5: R = V, G = p, B = q; break;
-		};
+        switch (i % 6) {
+            case 0: R = V, G = t, B = p; break;
+            case 1: R = q, G = V, B = p; break;
+            case 2: R = p, G = V, B = t; break;
+            case 3: R = p, G = q, B = V; break;
+            case 4: R = t, G = p, B = V; break;
+            case 5: R = V, G = p, B = q; break;
+        };
 
-		return {
-			r: Math.round(R * 255),
-			g: Math.round(G * 255),
-			b: Math.round(B * 255)
-		};
+        return {
+            r: Math.round(R * 255),
+            g: Math.round(G * 255),
+            b: Math.round(B * 255)
+        };
 	},
 
 	RGBtoHSV(r, g, b) {
@@ -77,7 +78,7 @@ export default {
 
 	hexToRgb(hex) {
 		// Преобразовывает (нап. "03F") в полный формат (нап. "0033FF")
-		return hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i ,(m, r, g, b) => {
+		return hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, (m, r, g, b) => {
 				'#' + r + r + g + g + b + b
 			})
 			.substring(1).match(/.{2}/g)
