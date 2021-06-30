@@ -1,4 +1,5 @@
 import TemplateColorPicker from "./template.js";
+import ColorHandlers from "../colorPalette/handlersColor.js";
 
 
 export default class ColorPicker extends HTMLElement {
@@ -23,7 +24,7 @@ export default class ColorPicker extends HTMLElement {
 		} else if ( name === "y" ) {
 
 		} else if ( name === "backgroundcolor" ) {
-
+			this.style.backgroundColor = newVal;
 		};
 	}
 

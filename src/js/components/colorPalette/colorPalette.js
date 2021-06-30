@@ -15,14 +15,13 @@ export default class ColorPalette extends HTMLElement {
 
 		this.dom = TemplateColoPalette.mapDOM(this.shadowRoot);
 
-		const observer = new MutationObserver((e) => { this.onMutationChange(e) });
-		observer.observe(this.shadowRoot, { attributes: true, subtree: true })
+		const observer = new MutationObserver((event) => { this.onMutationChange(event); });
+		observer.observe(this.shadowRoot, { attributes: true, subtree: true });
 	}
 
 	onMutationChange(records) {
 		records.forEach((record) => {
 			this.data = Handlers.update({
-				model: this.data,
 				dom: this.dom,
 				component: this,
 				element: record.target,
@@ -32,7 +31,10 @@ export default class ColorPalette extends HTMLElement {
 	}
 
 	connectedCallback() {
-
+		Handlers.update({
+			dom: this.dom,
+			element: this.dom.sliderColor
+		});
 	}
 };
 

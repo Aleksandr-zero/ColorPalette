@@ -85,13 +85,22 @@ export default class ColorSlider extends HTMLElement {
 	swipeStartThumbSlider(event) {
 		document.addEventListener("mousemove", this._swipeActionThumbSlider);
 		document.addEventListener("mouseup", this._swipeEndThumbSlider);
+
+		this.pressedX = event.clientX;
+		this.pos_x = this.thumb.getBoundingClientRect().x;
 	}
 
 	swipeActionThumbSlider(event) {
-		const position = Math.round((event.clientX - this.thumb.clientWidth) - (this.thumb.clientWidth / 2));
+		const position = Math.round(this.pos_x - this.slider.getBoundingClientRect().x - (this.pressedX - event.clientX));
+
+		if ( position >= this.slider.clientWidth || position <= 0 ) {
+			return;
+		};
+
 		this.thumb.style.transform = `translate3d(${position}px, 0, 0)`;
 
 		const newValue = this.returnsPercentWidthSlider_Value(position);
+
 		this.value = newValue;
 		this.setColor(newValue);
 	}
