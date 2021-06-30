@@ -19,7 +19,9 @@ export default class ColorSlider extends HTMLElement {
 	}
 
 	attributeChangedCallback(name, oldVal, newVal) {
-
+		if ( name === "value" ) {
+			this.setColor(newVal);
+		};
 	}
 
 	constructor() {
@@ -29,7 +31,6 @@ export default class ColorSlider extends HTMLElement {
 		this.shadowRoot.innerHTML = TemplateSlider.render();
 
 		this.dom = TemplateSlider.mapDOM(this.shadowRoot);
-		this.slider = this.dom.slider;
 		this.thumb = this.dom.thumb;
 
 		this.thumb.addEventListener("mousedown", (event) => { this.swipeStartThumbSlider(event); });
@@ -42,7 +43,7 @@ export default class ColorSlider extends HTMLElement {
 		if ( !this.value ) {
 			this.value = ColorSlider.returnDEFAULT_VALUE;
 		} else if ( this.value ) {
-			let position = Math.round(this.slider.clientWidth / 100 * this.value);
+			let position = Math.round(this.clientWidth / 100 * this.value);
 			this.thumb.style.transform = `translate3d(${position}px, 0, 0)`;
 
 			this.setColor();
@@ -79,30 +80,31 @@ export default class ColorSlider extends HTMLElement {
 	}
 
 	returnsPercentWidthSlider_Value(position) {
-		return position / (this.slider.clientWidth / 100);
+		return position / (this.clientWidth / 100);
 	}
 
 	swipeStartThumbSlider(event) {
-		document.addEventListener("mousemove", this._swipeActionThumbSlider);
-		document.addEventListener("mouseup", this._swipeEndThumbSlider);
-
 		this.pressedX = event.clientX;
 		this.pos_x = this.thumb.getBoundingClientRect().x;
+
+		document.addEventListener("mousemove", this._swipeActionThumbSlider);
+		document.addEventListener("mouseup", this._swipeEndThumbSlider);
 	}
 
 	swipeActionThumbSlider(event) {
-		const position = Math.round(this.pos_x - this.slider.getBoundingClientRect().x - (this.pressedX - event.clientX));
+		let position = Math.round(this.pos_x - this.getBoundingClientRect().x - (this.pressedX - event.clientX));
+		position -= this.thumb.offsetWidth / 2;
 
-		if ( position >= this.slider.clientWidth || position <= 0 ) {
-			return;
+		if ( position >= this.clientWidth - this.thumb.clientWidth / 2 ) {
+			position = this.clientWidth - this.thumb.clientWidth;
+		} else if ( position <= -(this.thumb.clientWidth / 2) ) {
+			position = -(this.thumb.clientWidth / 2);
 		};
 
 		this.thumb.style.transform = `translate3d(${position}px, 0, 0)`;
 
-		const newValue = this.returnsPercentWidthSlider_Value(position);
-
+		const newValue = this.returnsPercentWidthSlider_Value(position + 5);
 		this.value = newValue;
-		this.setColor(newValue);
 	}
 
 	swipeEndThumbSlider() {

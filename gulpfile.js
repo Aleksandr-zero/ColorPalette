@@ -44,4 +44,3 @@ const serve = () => {
 
 
 exports.serve = series(clear, html, scripts, serve);
-exports.clear = series(clear);

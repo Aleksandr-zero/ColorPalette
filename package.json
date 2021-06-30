@@ -5,7 +5,6 @@
   "main": "gulpfile.js",
   "scripts": {
     "dev": "gulp serve",
-    "clear": "gulp clear",
     "build": "rollup --config ./rollup.config.js"
   },
   "author": "Aleksandr Silkin",

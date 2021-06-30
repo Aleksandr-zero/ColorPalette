@@ -48,17 +48,17 @@ export default {
 		const var_G = ( g / 255 );
 		const var_B = ( b / 255 );
 
-		const var_Min = Math.min( var_R, var_G, var_B );  //Min. value of RGB
-		const var_Max = Math.max( var_R, var_G, var_B );  //Max. value of RGB
-		const del_Max = var_Max - var_Min;             	  //Delta RGB value
+		const var_Min = Math.min( var_R, var_G, var_B );
+		const var_Max = Math.max( var_R, var_G, var_B );
+		const del_Max = var_Max - var_Min;
 
 		let V = var_Max;
 		let H, S;
 
-		if ( del_Max === 0 ) {                     //This is a gray, no chroma...
+		if ( del_Max === 0 ) {
 			H = 0;
 			S = 0;
-		} else {                                    //Chromatic data...
+		} else {
 			S = del_Max / var_Max;
 
 			const del_R = ( ( ( var_Max - var_R ) / 6 ) + ( del_Max / 2 ) ) / del_Max;

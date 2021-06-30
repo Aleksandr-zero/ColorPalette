@@ -33,8 +33,9 @@ export default {
 			<div id="color-palette-wrapper">
 				<div class="container">
 					<color-picker
-						backgroundcolor="#ff0000"
 						id = "color-picker"
+						x="100"
+						y="0"
 					></color-picker>
 					<div class="back-sliders">
 						<color-slider id="slider-color"></color-slider>
@@ -55,7 +56,7 @@ export default {
 						</div>
 						<div class="back-input">
 							<input type="text" name="hex" id="input-hex" class="input">
-							<label for="input-hex" class="label">r</label>
+							<label for="input-hex" class="label">hex</label>
 						</div>
 					</div>
 				</div>
@@ -135,7 +136,7 @@ export default {
 				}
 
 				#input-hex {
-					max-width: 90px;
+					max-width: 104px;
 				}
 
 				.input:focus {

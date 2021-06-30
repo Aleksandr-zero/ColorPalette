@@ -3,9 +3,9 @@ export default {
 	Щаблон для выборки оттенка цвета.
 	*/
 
-	mapDOM() {
+	mapDOM(location) {
 		return {
-
+			thumb: location.getElementById("thumb")
 		}
 	},
 
@@ -37,15 +37,15 @@ export default {
 				}
 
 				#thumb {
-					width: 12px;
-					height: 12px;
+					width: 11px;
+					height: 11px;
 					position: absolute;
-					right: 0;
-					top: 0;
-					border: 2px solid #404040;
+					z-index: 20;
+					right: -7px;
+					top: -7px;
+					border: 3px solid #404040;
 					border-radius: 50%;
-					pointer-events: none;
-					box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+					cursor: pointer;
 				}
 
 				#bg-overlay-a {
