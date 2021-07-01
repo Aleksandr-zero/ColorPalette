@@ -28,6 +28,10 @@ export default {
 	renderCSS() {
 		return `
 			<style>
+				:host {
+					display: inline-block;
+				}
+
 				#slider {
 					position: relative;
 					border-radius: 4px;

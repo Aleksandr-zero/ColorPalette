@@ -27,11 +27,7 @@ export default class ColorPicker extends HTMLElement {
 	}
 
 	attributeChangedCallback(name, oldVal, newVal) {
-		if ( name === "x" ) {
-
-		} else if ( name === "y" ) {
-
-		} else if ( name === "backgroundcolor" ) {
+		if ( name === "backgroundcolor" ) {
 			this.style.backgroundColor = newVal;
 		};
 	}

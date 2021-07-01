@@ -16,8 +16,10 @@ export default {
 				inputR: location.getElementById("input-r"),
 				inputG: location.getElementById("input-g"),
 				inputB: location.getElementById("input-b"),
+				inputAlpha: location.getElementById("input-alpha"),
 				inputHEX: location.getElementById("input-hex"),
 			},
+			demonstration: location.getElementById("dem"),
 		}
 	},
 
@@ -32,32 +34,37 @@ export default {
 		return `
 			<div id="color-palette-wrapper">
 				<div class="container">
-					<color-picker
-						id = "color-picker"
-						x="100"
-						y="0"
-					></color-picker>
-					<div class="back-sliders">
-						<color-slider id="slider-color"></color-slider>
-						<color-slider id="slider-transparency"></color-slider>
+					<div class="container-wrapper">
+						<color-picker id="color-picker" x="100" y="0"></color-picker>
+						<div class="back-sliders">
+							<color-slider id="slider-color"></color-slider>
+							<color-slider id="slider-transparency"></color-slider>
+						</div>
+						<div class="back-fields">
+							<div class="back-input">
+								<input type="text" name="rgb-r" id="input-r" class="input">
+								<label for="input-r" class="label">r</label>
+							</div>
+							<div class="back-input">
+								<input type="text" name="rgb-g" id="input-g" class="input">
+								<label for="input-g" class="label">g</label>
+							</div>
+							<div class="back-input">
+								<input type="text" name="rgb-b" id="input-b" class="input">
+								<label for="input-b" class="label">b</label>
+							</div>
+							<div class="back-input">
+								<input type="text" name="rgb-alpha" id="input-alpha" class="input">
+								<label for="input-alpha" class="label">alpha</label>
+							</div>
+							<div class="back-input">
+								<input type="text" name="hex" id="input-hex" class="input">
+								<label for="input-hex" class="label">hex</label>
+							</div>
+						</div>
 					</div>
-					<div class="back-fields">
-						<div class="back-input">
-							<input type="text" name="rgb-r" id="input-r" class="input">
-							<label for="input-r" class="label">r</label>
-						</div>
-						<div class="back-input">
-							<input type="text" name="rgb-g" id="input-g" class="input">
-							<label for="input-g" class="label">g</label>
-						</div>
-						<div class="back-input">
-							<input type="text" name="rgb-b" id="input-b" class="input">
-							<label for="input-b" class="label">b</label>
-						</div>
-						<div class="back-input">
-							<input type="text" name="hex" id="input-hex" class="input">
-							<label for="input-hex" class="label">hex</label>
-						</div>
+					<div class="demonstration">
+						<div id="dem" class="demonstration-block">Demonstration</div>
 					</div>
 				</div>
 			</div>
@@ -70,17 +77,28 @@ export default {
 				.container {
 					max-width: 800px;
 					margin: 30px auto 0;
+					display: flex;
+				}
+
+				.container-wrapper {
+					width: 100%;
+				}
+
+				.demonstration {
+					width: 20%;
+					margin-left: 14px;
+				}
+
+				.demonstration-block {
+					font-size: 0;
+					color: transparent;
+					width: 100%;
+					height: 100%;
+					border-radius: 4px;
 				}
 
 				#color-palette-wrapper {
 					width: 100%;
-				}
-
-				#color-picker {
-					display: inline-block;
-					width: 100%;
-					height: 230px;
-					border-radius: 3px;
 				}
 
 				#slider-color,
@@ -88,7 +106,6 @@ export default {
 					border-radius: 4px;
 					width: 100%;
 					height: 40px;
-					display: inline-block;
 				}
 
 				#slider-color {
@@ -119,13 +136,14 @@ export default {
 
 				.input {
 					outline: none;
-					border: 1px solid #bbbfc5;
+					border: 1.5px solid #bbbfc5;
 					border-radius: 2px;
 					padding: 3px 6px 6px 6px;
 					font-size: 26px;
-					max-width: 48px;
+					max-width: 60px;
 					line-height: 1;
 					font-weight: 600;
+					text-align: center;
 				}
 
 				.label {
@@ -136,11 +154,11 @@ export default {
 				}
 
 				#input-hex {
-					max-width: 104px;
+					max-width: 128px;
 				}
 
 				.input:focus {
-					border: 2px solid #1F2667;
+					border: 1.5px solid #1F2667;
 				}
 			</style>
 		`

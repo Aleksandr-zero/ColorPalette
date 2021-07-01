@@ -29,6 +29,13 @@ export default {
 	renderCSS() {
 		return `
 			<style>
+				:host {
+					display: inline-block;
+					width: 100%;
+					height: 230px;
+					border-radius: 4px;
+				}
+
 				.color-picker-container {
 					position: relative;
 					width: 100%;
@@ -59,7 +66,7 @@ export default {
 				#bg-overlay-b {
 					width: 100%;
 					height: 100%;
-					border-radius: 3px;
+					border-radius: 4px;
 					position: absolute;
 					background: linear-gradient(to bottom, transparent 0%, #000 100%);
 				}

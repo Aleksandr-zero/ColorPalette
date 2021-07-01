@@ -21,6 +21,7 @@ export default class ColorSlider extends HTMLElement {
 	attributeChangedCallback(name, oldVal, newVal) {
 		if ( name === "value" ) {
 			this.setColor(newVal);
+			this.refreshSlider(newVal);
 		};
 	}
 
@@ -80,31 +81,29 @@ export default class ColorSlider extends HTMLElement {
 	}
 
 	returnsPercentWidthSlider_Value(position) {
-		return position / (this.clientWidth / 100);
+		return (position / this.offsetWidth) * 100
 	}
 
 	swipeStartThumbSlider(event) {
-		this.pressedX = event.clientX;
-		this.pos_x = this.thumb.getBoundingClientRect().x;
-
 		document.addEventListener("mousemove", this._swipeActionThumbSlider);
 		document.addEventListener("mouseup", this._swipeEndThumbSlider);
 	}
 
 	swipeActionThumbSlider(event) {
-		let position = Math.round(this.pos_x - this.getBoundingClientRect().x - (this.pressedX - event.clientX));
-		position -= this.thumb.offsetWidth / 2;
+		let position = (event.clientX - this.getBoundingClientRect().left) - this.thumb.offsetWidth / 2;
 
-		if ( position >= this.clientWidth - this.thumb.clientWidth / 2 ) {
-			position = this.clientWidth - this.thumb.clientWidth;
-		} else if ( position <= -(this.thumb.clientWidth / 2) ) {
-			position = -(this.thumb.clientWidth / 2);
+		if ( position > this.offsetWidth ) {
+			position = this.offsetWidth;
+		} else if ( position < 0 ) {
+			position = 0;
 		};
 
-		this.thumb.style.transform = `translate3d(${position}px, 0, 0)`;
-
-		const newValue = this.returnsPercentWidthSlider_Value(position + 5);
+		const newValue = this.returnsPercentWidthSlider_Value(position);
 		this.value = newValue;
+	}
+
+	refreshSlider(value) {
+		this.thumb.style.left = `${value / 100 * this.offsetWidth - this.thumb.offsetWidth / 2}px`;
 	}
 
 	swipeEndThumbSlider() {
