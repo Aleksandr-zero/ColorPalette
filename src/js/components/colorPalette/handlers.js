@@ -34,7 +34,7 @@ export default {
 		} else if ( obj.element.id === "color-picker" ) {
 			const rgb = ColorHandlers.HSVtoRGB(valueSliderColor, valueX, valueY);
 
-			// Добавляем +0.00001 чтобы округлить 1 -> (в будущем например может попасться число 45.23773454 )
+			// Добавляем +0.00001 чтобы округлить 1 до сотых -> (в будущем например может попасться число 45.23773454 )
 			const alpha = +((100 - obj.dom.sliderTransparency.value) / 100 + 0.00001).toFixed(2);
 
 			obj.dom.demonstration.style.background = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
@@ -45,8 +45,14 @@ export default {
 			const alpha = Math.round(100 - obj.dom.sliderTransparency.value);
 			const rgb = ColorHandlers.HSVtoRGB(valueSliderColor, valueX, valueY);
 
+			const rgbaToHex = ColorHandlers.rgbaToHex({
+				...rgb,
+				...{ a: alpha / 100 }
+			});
+
 			obj.dom.demonstration.style.background = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha / 100})`;
 			obj.dom.input.inputAlpha.value = alpha;
+			obj.dom.input.inputHEX.value = rgbaToHex;
 		};
 	},
 
@@ -55,7 +61,13 @@ export default {
 		obj.dom.input.inputG.value = rgb.g;
 		obj.dom.input.inputB.value = rgb.b;
 
-		obj.dom.input.inputHEX.value = ColorHandlers.rgbToHex(rgb.r, rgb.g, rgb.b);
+		const alpha = obj.dom.input.inputAlpha.value / 100;
+		const rgbaToHex = ColorHandlers.rgbaToHex({
+			...rgb,
+			...{ a: alpha }
+		});
+
+		obj.dom.input.inputHEX.value = rgbaToHex;
 	},
 
 	updateColorPicker(rgb, obj) {

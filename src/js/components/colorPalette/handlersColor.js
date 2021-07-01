@@ -14,28 +14,26 @@ export default {
 
 		let R, G, B, i, f, p, q, t;
 
-        if (arguments.length === 1) S = H.S, V = H.V, H = H.H;
+		i = Math.floor(H * 6);
+		f = H * 6 - i;
+		p = V * (1 - S);
+		q = V * (1 - f * S);
+		t = V * (1 - (1 - f) * S);
 
-        i = Math.floor(H * 6);
-        f = H * 6 - i;
-        p = V * (1 - S);
-        q = V * (1 - f * S);
-        t = V * (1 - (1 - f) * S);
+		switch (i % 6) {
+			case 0: R = V, G = t, B = p; break;
+			case 1: R = q, G = V, B = p; break;
+			case 2: R = p, G = V, B = t; break;
+			case 3: R = p, G = q, B = V; break;
+			case 4: R = t, G = p, B = V; break;
+			case 5: R = V, G = p, B = q; break;
+		};
 
-        switch (i % 6) {
-            case 0: R = V, G = t, B = p; break;
-            case 1: R = q, G = V, B = p; break;
-            case 2: R = p, G = V, B = t; break;
-            case 3: R = p, G = q, B = V; break;
-            case 4: R = t, G = p, B = V; break;
-            case 5: R = V, G = p, B = q; break;
-        };
-
-        return {
-            r: Math.round(R * 255),
-            g: Math.round(G * 255),
-            b: Math.round(B * 255)
-        };
+		return {
+			r: Math.round(R * 255),
+			g: Math.round(G * 255),
+			b: Math.round(B * 255)
+		};
 	},
 
 	RGBtoHSV(r, g, b) {
@@ -90,4 +88,18 @@ export default {
 			return x.toString(16).padStart(2, '0');
 		}).join('');
 	},
+
+	rgbaToHex(rgba) {
+		let r = rgba.r.toString(16),
+			g = rgba.g.toString(16),
+			b = rgba.b.toString(16),
+			a = Math.round(rgba.a * 255).toString(16);
+
+		if (r.length === 1) r = "0" + r;
+		if (g.length === 1) g = "0" + g;
+		if (b.length === 1) b = "0" + b;
+		if (a.length === 1) a = "0" + a;
+
+		return (rgba.a === 1) ? "#" + r + g + b : "#" + r + g + b + a;
+	}
 };

@@ -140,7 +140,7 @@ export default {
 					border-radius: 2px;
 					padding: 3px 6px 6px 6px;
 					font-size: 26px;
-					max-width: 60px;
+					max-width: 62px;
 					line-height: 1;
 					font-weight: 600;
 					text-align: center;
@@ -154,7 +154,7 @@ export default {
 				}
 
 				#input-hex {
-					max-width: 128px;
+					max-width: 160px;
 				}
 
 				.input:focus {

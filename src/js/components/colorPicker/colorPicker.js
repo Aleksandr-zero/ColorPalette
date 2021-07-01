@@ -1,5 +1,4 @@
 import TemplateColorPicker from "./template.js";
-import ColorHandlers from "../colorPalette/handlersColor.js";
 
 
 export default class ColorPicker extends HTMLElement {
@@ -23,7 +22,7 @@ export default class ColorPicker extends HTMLElement {
 	}
 
 	static get observedAttributes() {
-		return ["x", "y", "backgroundcolor"]
+		return ["x", "y", "backgroundcolor"];
 	}
 
 	attributeChangedCallback(name, oldVal, newVal) {
@@ -58,33 +57,42 @@ export default class ColorPicker extends HTMLElement {
 
 	returnsPercentWidthSlider_Value(x, y) {
 		return {
-			x: x / (this.clientWidth / 100),
-			y: y / (this.clientHeight / 100),
+			x: (x / this.offsetWidth) * 100,
+			y: (y / this.offsetHeight) * 100,
 		};
 	}
 
+	refreshCoordinates() {
+		this.thumb.style.left = `${(this.x / 100 * this.offsetWidth - this.thumb.offsetWidth / 2)}px`;
+        this.thumb.style.top = `${(this.y / 100 * this.offsetHeight - this.thumb.offsetWidth / 2)}px`;
+	};
+
 	swipeStartThumbSlider(event) {
-		this.pressedX = event.clientX;
-		this.pressedY = event.clientY;
-
-		this.pos_x = this.thumb.getBoundingClientRect().x;
-		this.pos_y = this.thumb.getBoundingClientRect().y;
-
 		document.addEventListener("mousemove", this._swipeActionThumbSlider);
 		document.addEventListener("mouseup", this._swipeEndThumbSlider);
 	}
 
 	swipeActionThumbSlider() {
-		let pos_x = Math.round(this.pos_x - this.getBoundingClientRect().x - (this.pressedX - event.clientX));
-		let pos_y = Math.round(this.pos_y - this.getBoundingClientRect().y - (this.pressedY - event.clientY));
+		let pos_x = (event.clientX - this.getBoundingClientRect().left) - this.thumb.offsetWidth / 2;
+		let pos_y = (event.clientY - this.getBoundingClientRect().top) - this.thumb.offsetHeight / 2;
+
+        if (pos_x > this.offsetWidth) {
+            pos_x = this.offsetWidth;
+        }; if (pos_x < 0) {
+            pos_x = 0;
+        };
+
+        if (pos_y > this.offsetHeight) {
+            pos_y = this.offsetHeight;
+        }; if (pos_y < 0) {
+            pos_y = 0;
+        };
 
 		const value = this.returnsPercentWidthSlider_Value(pos_x, pos_y);
 
-        this.dom.thumb.style.left = `${pos_x}px`;
-        this.dom.thumb.style.top = `${pos_y}px`;
-
         this.x = value.x;
         this.y = value.y;
+        this.refreshCoordinates();
 	}
 
 	swipeEndThumbSlider() {

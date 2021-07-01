@@ -48,8 +48,8 @@ export default {
 					height: 11px;
 					position: absolute;
 					z-index: 20;
-					right: -7px;
-					top: -7px;
+					right: -8.5px;
+					top: -8.5px;
 					border: 3px solid #404040;
 					border-radius: 50%;
 					cursor: pointer;
