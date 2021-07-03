@@ -9,6 +9,7 @@ export default {
 
 	mapDOM(location) {
 		return {
+			container: location.getElementById("main-container"),
 			sliderColor: location.getElementById("slider-color"),
 			sliderTransparency: location.getElementById("slider-transparency"),
 			colorPicker: location.getElementById("color-picker"),
@@ -33,7 +34,7 @@ export default {
 	renderHTML() {
 		return `
 			<div id="color-palette-wrapper">
-				<div class="container">
+				<div id="main-container" class="container">
 					<div class="container-wrapper">
 						<color-picker id="color-picker" x="100" y="0"></color-picker>
 						<div class="back-sliders">
@@ -42,19 +43,19 @@ export default {
 						</div>
 						<div class="back-fields">
 							<div class="back-input">
-								<input type="text" name="rgb-r" id="input-r" class="input">
+								<input type="number" data-value="0" max="255" min="0" name="rgb-r" id="input-r" class="input">
 								<label for="input-r" class="label">r</label>
 							</div>
 							<div class="back-input">
-								<input type="text" name="rgb-g" id="input-g" class="input">
+								<input type="number" data-value="0" max="255" min="0" name="rgb-g" id="input-g" class="input">
 								<label for="input-g" class="label">g</label>
 							</div>
 							<div class="back-input">
-								<input type="text" name="rgb-b" id="input-b" class="input">
+								<input type="number" data-value="0" max="255" min="0" name="rgb-b" id="input-b" class="input">
 								<label for="input-b" class="label">b</label>
 							</div>
 							<div class="back-input">
-								<input type="text" name="rgb-alpha" id="input-alpha" class="input">
+								<input type="number" max="100" min="0" name="rgb-alpha" id="input-alpha" class="input">
 								<label for="input-alpha" class="label">alpha</label>
 							</div>
 							<div class="back-input">
@@ -140,7 +141,7 @@ export default {
 					border-radius: 2px;
 					padding: 3px 6px 6px 6px;
 					font-size: 26px;
-					max-width: 62px;
+					max-width: 70px;
 					line-height: 1;
 					font-weight: 600;
 					text-align: center;

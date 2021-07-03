@@ -17,6 +17,8 @@ export default class ColorPalette extends HTMLElement {
 
 		const observer = new MutationObserver((event) => { this.onMutationChange(event); });
 		observer.observe(this.shadowRoot, { attributes: true, subtree: true });
+
+		this.addEventInputs();
 	}
 
 	onMutationChange(records) {
@@ -30,7 +32,22 @@ export default class ColorPalette extends HTMLElement {
 		});
 	}
 
+	addEventInputs() {
+		Object.entries(this.dom.input).forEach((input) => {
+			if ( input[1].type === "number" && input[1].name !== "rgb-alpha" ) {
+				input[1].addEventListener("change", (event) => { Handlers.handlerInputsRGB(event); });
+
+			} else if ( input[1].type === "number" && input[1].name === "rgb-alpha" ) {
+				input[1].addEventListener("change", (event) => { Handlers.handlerInputsAlpha(event); });
+
+			} else if ( input[1].name === "hex" ) {
+				input[1].addEventListener("change", (event) => { Handlers.handlerInputsHEX(event); });
+			};
+		});
+	}
+
 	connectedCallback() {
+		Handlers.container = this.dom.container;
 		Handlers.update({
 			dom: this.dom,
 			element: this.dom.sliderColor

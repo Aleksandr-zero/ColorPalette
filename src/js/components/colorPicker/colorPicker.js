@@ -28,11 +28,13 @@ export default class ColorPicker extends HTMLElement {
 	attributeChangedCallback(name, oldVal, newVal) {
 		if ( name === "backgroundcolor" ) {
 			this.style.backgroundColor = newVal;
+		} else if ( name === "x" || name === "y" ) {
+			this.refreshCoordinates();
 		};
 	}
 
 	set backgroundcolor(value) {
-		this.setAttribute("backgroundcolo", value);
+		this.setAttribute("backgroundcolor", value);
 	}
 
 	get backgroundcolor() {
@@ -92,7 +94,6 @@ export default class ColorPicker extends HTMLElement {
 
         this.x = value.x;
         this.y = value.y;
-        this.refreshCoordinates();
 	}
 
 	swipeEndThumbSlider() {
